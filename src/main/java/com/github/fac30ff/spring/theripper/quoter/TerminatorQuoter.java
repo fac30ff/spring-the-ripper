@@ -39,4 +39,12 @@ public class TerminatorQuoter implements Quoter {
       System.out.println("message = " + message);
     }
   }
+
+  /**
+   * added for custome context loader
+   * @param repeat
+   */
+  public void setRepeat(int repeat) {
+    this.repeat = repeat;
+  }
 }
