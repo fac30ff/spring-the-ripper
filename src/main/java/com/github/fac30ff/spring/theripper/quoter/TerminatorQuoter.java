@@ -1,5 +1,6 @@
 package com.github.fac30ff.spring.theripper.quoter;
 
+import com.github.fac30ff.spring.theripper.annotation.DeprecatedClass;
 import com.github.fac30ff.spring.theripper.annotation.InjectRandomInt;
 import com.github.fac30ff.spring.theripper.annotation.PostProxy;
 import com.github.fac30ff.spring.theripper.annotation.Profiling;
@@ -7,6 +8,7 @@ import com.github.fac30ff.spring.theripper.annotation.Profiling;
 import javax.annotation.PostConstruct;
 
 @Profiling
+@DeprecatedClass(newImpl = T1000.class)
 public class TerminatorQuoter implements Quoter {
   @InjectRandomInt(min = 2, max = 8)
   private int repeat;
