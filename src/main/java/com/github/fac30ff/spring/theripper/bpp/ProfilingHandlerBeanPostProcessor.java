@@ -36,20 +36,17 @@ public class ProfilingHandlerBeanPostProcessor implements BeanPostProcessor {
   public Object postProcessAfterInitialization(final Object bean, String beanName) throws BeansException {
     Class beanClass = originalBeans.get(beanName);
     if (beanClass != null) {
-      return Proxy.newProxyInstance(beanClass.getClassLoader(), beanClass.getInterfaces(), new InvocationHandler() {
-        @Override
-        public Object invoke(Object proxy, Method method, Object[] args) throws Throwable {
-          if (controller.isEnabled()) {
-            System.out.println("profiling...");
-            long before = System.nanoTime();
-            Object retVal = method.invoke(bean, args);
-            long after = System.nanoTime();
-            System.out.println(after-before);
-            System.out.println("done");
-            return retVal;
-          } else {
-            return method.invoke(bean, args);
-          }
+      return Proxy.newProxyInstance(beanClass.getClassLoader(), beanClass.getInterfaces(), (proxy, method, args) -> {
+        if (controller.isEnabled()) {
+          System.out.println("profiling...");
+          long before = System.nanoTime();
+          Object retVal = method.invoke(bean, args);
+          long after = System.nanoTime();
+          System.out.println(after-before);
+          System.out.println("done");
+          return retVal;
+        } else {
+          return method.invoke(bean, args);
         }
       });
     }
